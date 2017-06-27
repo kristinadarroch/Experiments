@@ -1,27 +1,42 @@
 <div class="panel panel-default">
   <div class="panel-heading">
-    <div class="row pad-left-right">
-
-      <span class="pull-left title">
-        <span class="list-group-item-heading" style="...">{{contact?.name}}</span>
-      </span>
-      <br>
-      <br>
-      <img class="img-responsive"
-           [src]="contact?.imageUrl"
-           style="..."/>
-      <div class="pull-right" style="margin-top: 5rem; ">
-      <a class="btn btn-primary">Edit</a>
-        <a class="btn btn-danger">Delete</a>
+    <h3>{{contact?.name}}</h3>
+    <div class="row pad-all">
+      <div class="clear-fix pull-left">
+        <img class="img-responsive" src="{{contact?.imageUrl}}" style="max-height: 80px;"/>
+      </div>
+      <div class="pull-right" style="margin-top: 2rem; ">
+        <button class="btn btn-primary">Edit</button>
+        <button class="btn btn-danger">Delete</button>
       </div>
     </div>
   </div>
+
   <div class="panel-body">
-    <div class="row">
-      <div class="col-xs-12">
-        <h5>Email:</h5><span class="list-group-item-heading" style="...">{{contact?.email}}</span>
-        <h5>Phone:</h5><span class="list-group-item-heading" style="...">{{contact?.phone}}</span>
+    <div class="pad-left-right">
+      <div class="row" *ngIf="contact?.email">
+        <label>Email:</label>
+        <span class="label-value">{{contact?.email}}</span>
+      </div>
+
+      <div class="row" *ngIf="contact?.phone">
+        <label>Phone:</label>
+        <span class="label-value">{{contact?.phone}}</span>
+      </div>
     </div>
+
+    <div class="row" *ngIf="contactGroup && contactGroup.length > 0">
+      <label for="groupContacts" style="margin-left: 1rem;">Contacts in Team:</label>
+      <div id="groupContacts" class="col-xs-12">
+        <div *ngFor="let contact of contactGroup">
+          <div>
+            <cms-contact-item class="col-sm-11" [contact]="contact"></cms-contact-item>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
-</div>
+
+

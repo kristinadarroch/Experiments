@@ -6,6 +6,6 @@ export class CmsPage {
   }
 
   getParagraphText() {
-    return element(by.css('cms-root h1')).getText();
+    return element(by.css('app-root h1')).getText();
   }
 }

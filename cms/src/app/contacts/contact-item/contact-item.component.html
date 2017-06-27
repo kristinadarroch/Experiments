@@ -1,18 +1,12 @@
-<!--<div class="col-xs-12">
-  <a *ngFor="let contact of contacts" class="list-group-item clearfix">
-<div class="row">
-<div class="pull-left row">
-  <span class="list-group-item-heading" style="...">{{contact?.name}}</span>
-</div>
-<span class="pull-right">
-            <img class="img-responsive"
-                 [src]="contact?.imageUrl"
-                 style="..."/>
- </span>
-&lt;!&ndash;</a>&ndash;&gt;
-</div>-->
 
-
-<a class="list-group-item clearfix documentDiv" >
-  <!-- Display document name here -->
+<a class="list-group-item clearfix" >
+  <div class="pull-left">
+    <span class="list-group-item-heading" style="font-size: 2rem">{{contact?.name}}</span>
+  </div>
+  <span class="pull-right" >
+      <img class="img-responsive"
+           src="{{contact?.imageUrl}}"
+           style="max-height: 50px;"/>
+  </span>
 </a>
+
