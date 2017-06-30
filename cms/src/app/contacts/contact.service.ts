@@ -45,7 +45,7 @@ export class ContactService {
     if (contact === null)
       return;
     this.contacts.push(contact);
-    this.contactsChangeEvent.emit(this.contacts);
+    this.contactsChangeEvent.emit(this.contacts.slice());
   }
 
 
@@ -61,7 +61,7 @@ export class ContactService {
 
     this.contacts.splice(pos,1);
     this.contacts = [...this.contacts];
-    this.contactsChangeEvent.emit(this.contacts);
+    this.contactsChangeEvent.emit(this.contacts.slice());
   }
 
 
@@ -74,6 +74,6 @@ export class ContactService {
       return;
 
     this.contacts = [...this.contacts];
-    this.contactsChangeEvent.emit(this.contacts);
+    this.contactsChangeEvent.emit(this.contacts.slice());
   }
 }

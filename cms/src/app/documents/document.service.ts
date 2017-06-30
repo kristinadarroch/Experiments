@@ -9,7 +9,7 @@ export class DocumentService {
   currentDocumentId: string;
   private documents: Document[];
   documentSelectedEvent = new EventEmitter<Document>();
-  documentChangeEvent = new EventEmitter<Document>();
+  documentChangeEvent = new EventEmitter<Document[]>();
 
   constructor() {
     this.documents = MOCKDOCUMENTS;
@@ -34,7 +34,7 @@ export class DocumentService {
     if (document === null)
       return;
     this.documents.push(document);
-    this.documentChangeEvent.emit(document);
+    this.documentChangeEvent.emit(this.documents);
   }
 
 
@@ -50,7 +50,8 @@ export class DocumentService {
 
     this.documents.splice(pos,1);
     this.documents = [...this.documents];
-    this.documentChangeEvent.emit(document);
+    this.documentChangeEvent.emit(this.documents);
+
   }
 
 
@@ -63,7 +64,7 @@ export class DocumentService {
       return;
 
     this.documents = [...this.documents];
-    this.documentChangeEvent.emit(document);
+    this.documentChangeEvent.emit(this.documents);
   }
 
   setCurrentDocument(id: string): Document {

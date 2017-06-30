@@ -2,15 +2,15 @@
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">WeLearn CMS</a>
+      <a class="navbar-brand" routerLink="/">WeLearn CMS</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li><a style="cursor: pointer;" href="#" (click)="onSelected('documents')">Documents</a></li>
-        <li><a style="cursor: pointer;" href="#" (click)="onSelected('messages')">Messages</a></li>
-        <li><a style="cursor: pointer;" href="#" (click)="onSelected('contacts')">Contacts</a></li>
+        <li routerLinkActive="active"><a routerLink="/documents">Documents</a></li>
+        <li routerLinkActive="active"><a routerLink="/messages">Messages</a></li>
+        <li routerLinkActive="active"><a routerLink="/contacts">Contacts</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown" cmsDropdown>
@@ -23,7 +23,7 @@
           </ul>
         </li>
       </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
+    </div>
+  </div>
 </nav>
 

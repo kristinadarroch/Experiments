@@ -22,4 +22,5 @@ export class MessageItemComponent implements OnInit {
     this.messageSender = contact.name;
   }
 
+
 }
