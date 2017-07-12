@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import {Document} from "../document.model";
 
 @Component({
   selector: 'cms-document-item',
@@ -8,6 +7,7 @@ import {Document} from "../document.model";
 })
 export class DocumentItemComponent implements OnInit {
 
+  @Input() documentIdx: number;
   @Input() document: Document;
 
   constructor() { }

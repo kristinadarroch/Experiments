@@ -1,61 +1,64 @@
-import {Component, OnInit} from '@angular/core';
-import {DocumentService} from '../document.service';
-import {Document} from '../document.model';
-import {ActivatedRoute, Router, Params} from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import {DocumentsService} from "../documents.service";
+import {Document} from "../document";
+import {Router, ActivatedRoute} from "@angular/router";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'cms-document-edit',
   templateUrl: './document-edit.component.html',
-  styleUrls: ['./document-edit.component.css']
+
 })
 export class DocumentEditComponent implements OnInit {
-  document: Document;
-  documentIdx: number;
-  originalDocument: Document;
+
+  subscription: Subscription;
+  oldDocument: Document;
   editMode: boolean = false;
 
-  constructor(private documentService: DocumentService,
+  constructor(private documentsService: DocumentsService ,
               private router: Router,
               private route: ActivatedRoute) {
+
   }
 
   ngOnInit() {
-    this.route.params.subscribe(
-      (params: Params) => {
-        const id: string = params['id'];
-
-        if (!id) {
+    this.editMode = false;
+    this.subscription = this.route.params.subscribe(
+      (params: any) => {
+        if (params.hasOwnProperty('id')) {
+          let documentIdx = params['id'];
+          this.oldDocument = this.documentsService.getDocument(documentIdx);
+          this.editMode = true;
+        }
+        else {
           this.editMode = false;
-          return;
         }
-
-        this.originalDocument = this.documentService.getDocument(id);
-        if (!this.originalDocument) {
-          return;
-        }
-
-        this.editMode = true;
-        this.document = JSON.parse(JSON.stringify(this.originalDocument));
       }
-    );
+    )
   }
 
-  onSubmit(formData) {
-    let newDocument = new Document(null, formData.name, formData.description, formData.documentUrl, null);
+  onCancel() {
+    this.router.navigate(['documents']);
+  }
 
+  onSubmit(value) {
+    let newDocument = new Document(null,
+                                   value.name,
+                                   value.description,
+                                   value.documentUrl);
     if (this.editMode) {
-      this.documentService.updateDocument(this.originalDocument, newDocument);
+      newDocument.id = this.oldDocument.id;
+      this.documentsService.updateDocument(this.oldDocument, newDocument);
     }
     else {
-      this.documentService.addDocument(newDocument);
+      this.documentsService.addDocument(newDocument);
     }
 
     this.router.navigate(['documents']);
   }
 
-
-  onCancel() {
-    this.router.navigate(['/documents']);
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 }

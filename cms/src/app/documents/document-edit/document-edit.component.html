@@ -12,10 +12,14 @@
             class="form-control"
             size="120"
             max="120"
-            [ngModel]="document?.name"
+            [ngModel]="oldDocument?.name"
             required
             name="name"
             #name="ngModel">
+
+          <div class="alert alert-danger" *ngIf="name.touched && !name.valid">
+            You must specify a document title.
+          </div>
         </div>
 
         <div class="col-sm-12 form-group">
@@ -26,7 +30,7 @@
             class="form-control"
             size="120"
             max="255"
-            [ngModel]="document?.description"
+            [ngModel]="oldDocument?.description"
             name="description">
         </div>
 
@@ -42,11 +46,11 @@
             name="documentUrl"
             required
             #documentUrl="ngModel">
-        </div>
-      </div>
+          <div class="alert alert-danger" *ngIf="documentUrl.touched && !documentUrl.valid">
+            You must specify a valid URL for the document.
+          </div>
 
-      <div class="alert alert-danger" *ngIf="!f.valid">
-        The Document title and Document URL are required.
+        </div>
       </div>
 
       <div class="row">

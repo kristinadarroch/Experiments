@@ -1,8 +1,16 @@
 
+
 .center-panel {
   margin-left: auto;
   margin-right: auto;
-  width: 38rem;
+  width: 21rem;
+
+}
+
+.resourcesDiv {
+  position: relative;
+  left: 0rem;
+  width:30%;
 }
 
 .title {

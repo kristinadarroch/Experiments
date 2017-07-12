@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {Contact} from './contact.model';
-import {ContactService} from './contact.service';
+import { Component} from '@angular/core';
+import {Contact} from "./contact";
 
 @Component({
   selector: 'cms-contacts',
@@ -11,9 +10,7 @@ export class ContactsComponent {
 
   selectedContact: Contact = null;
 
-  constructor(private contactService: ContactService) { }
-
-
+  constructor() { }
 
 
 }

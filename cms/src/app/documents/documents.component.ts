@@ -1,18 +1,15 @@
-import { Component } from '@angular/core';
-import { Document } from './document.model';
-import { DocumentService } from './document.service';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'cms-documents',
   templateUrl: './documents.component.html',
   styleUrls: ['./documents.component.css']
 })
-export class DocumentsComponent {
+export class DocumentsComponent implements OnInit {
 
-  selectedDocument: Document;
+  constructor() { }
 
-  constructor(private documentService: DocumentService) { }
-
-
+  ngOnInit() {
+  }
 
 }
