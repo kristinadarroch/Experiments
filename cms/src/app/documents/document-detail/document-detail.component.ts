@@ -3,6 +3,7 @@ import {Document} from "../document.model";
 import {ActivatedRoute, Router, Params} from "@angular/router";
 import {DocumentService} from "../document.service";
 import {WindRefService} from "../../wind-ref.service";
+import {Subscription} from "rxjs/Subscription";
 
 @Component({
   selector: 'cms-document-detail',
@@ -35,6 +36,7 @@ export class DocumentDetailComponent implements OnInit {
       this.nativeWindow.open(this.document.url);
     }
   }
+
 
   onDelete() {
     this.documentService.deleteDocument(this.document);

@@ -22,5 +22,12 @@ export class MessageItemComponent implements OnInit {
     this.messageSender = contact.name;
   }
 
+  // ngOnInit() {
+  //   let contact: Contact = this.contactService.getContact(this.message.sender);
+  //   this.messageSender = contact.name;
+  //   if (this.contactService.currentContact.id === this.message.sender) {
+  //     this.canEdit = true;
+  //   }
+  // }
 
 }

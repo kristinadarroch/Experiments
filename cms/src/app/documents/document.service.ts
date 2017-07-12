@@ -2,18 +2,22 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import { Document } from './document.model';
 import { MOCKDOCUMENTS } from './MOCKDOCUMENTS';
+import {Subject} from "rxjs/Subject";
 
 @Injectable()
 export class DocumentService {
   currentDocumentObj: Document;
   currentDocumentId: string;
+  maxId: number = 0;
+
   private documents: Document[];
-  documentSelectedEvent = new EventEmitter<Document>();
-  documentChangeEvent = new EventEmitter<Document[]>();
+
+  documentChangeEvent = new Subject<Document[]>();
 
   constructor() {
     this.documents = MOCKDOCUMENTS;
     this.currentDocumentId = '1';
+    this.maxId = this.getMaxId();
   }
 
   getDocuments() {
@@ -29,53 +33,70 @@ export class DocumentService {
     return null;
   }
 
-
   addDocument(document: Document) {
-    if (document === null)
+    if (!document) {
       return;
+    }
+
+    this.maxId++;
+    document.id = String(this.maxId);
+
     this.documents.push(document);
-    this.documentChangeEvent.emit(this.documents);
+    this.documentChangeEvent.next(this.documents);
   }
 
 
   deleteDocument(document: Document) {
-    if (document === null) {
+    if (!document) {
       return;
     }
 
     const pos = this.documents.indexOf(document);
-    if (pos < 0) {
+    if (pos < 0) { // document not found in list
       return;
     }
 
-    this.documents.splice(pos,1);
+    this.documents.splice(pos, 1);
     this.documents = [...this.documents];
-    this.documentChangeEvent.emit(this.documents);
-
+    this.documentChangeEvent.next(this.documents);
   }
 
 
-  updateDocument(document: Document) {
-    if (document === null)
+  updateDocument(originalDocument: Document, newDocument: Document) {
+    if (!originalDocument || !newDocument) {
       return;
+    }
 
-    const pos = this.documents.indexOf(document);
-    if (pos < 0)
+    const pos = this.documents.indexOf(originalDocument);
+    if (pos < 0) { // original document not in list
       return;
+    }
 
-    this.documents = [...this.documents];
-    this.documentChangeEvent.emit(this.documents);
+    newDocument.id = originalDocument.id; // must have the same document id
+    this.documents[pos] = newDocument;
+    this.documentChangeEvent.next(this.documents);
   }
 
   setCurrentDocument(id: string): Document {
     if (id === null) {
       this.currentDocumentObj = this.documents[0];
       return this.currentDocumentObj;
-    }
-    else {
+    } else {
       this.currentDocumentObj = this.getDocument(id);
     }
     return this.currentDocumentObj;
+  }
+
+  getMaxId(): number {
+    let maxId = 0;
+    for (let document of this.documents) {
+      const id: number = parseInt(document.id, 0);
+      if (id > maxId) {
+        maxId = id;
+      }
+    }
+
+    return maxId;
   }
 
 }

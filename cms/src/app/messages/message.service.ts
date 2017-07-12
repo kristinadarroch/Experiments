@@ -3,6 +3,7 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {Message} from './message.model';
 import {MOCKMESSAGES} from './MOCKMESSAGES';
+import {Subject} from 'rxjs/Subject';
 
 @Injectable()
 export class MessageService {
@@ -10,7 +11,7 @@ export class MessageService {
   currentMessageId: string;
 
   private messages: Message[];
-  messageChangeEvent = new EventEmitter<Message[]>();
+  messageChangeEvent = new Subject<Message[]>();
 
   constructor() {
     this.messages = MOCKMESSAGES;
@@ -18,9 +19,9 @@ export class MessageService {
   }
 
   getMessage(id: string): boolean {
-    for (var i = 0; i < this.messages.length; i++) {
+    for (let i = 0; i < this.messages.length; i++) {
       if (this.messages[i].id === id) {
-        this.currentMessage = this.messages[i]
+        this.currentMessage = this.messages[i];
         return true;
       }
     }
@@ -33,10 +34,11 @@ export class MessageService {
 
 
   addMessage(message: Message) {
-    if (message === null)
+    if (message === null) {
       return;
+    }
     this.messages.push(message);
-    this.messageChangeEvent.emit(this.messages.slice()  );
+    this.messageChangeEvent.next(this.messages.slice()  );
   }
 
 
@@ -50,22 +52,23 @@ export class MessageService {
       return;
     }
 
-    this.messages.splice(pos,1);
+    this.messages.splice(pos, 1);
     this.messages = [...this.messages];
-    this.messageChangeEvent.emit(this.messages.slice());
+    this.messageChangeEvent.next(this.messages.slice());
   }
 
 
   updateMessage(message: Message) {
-    if (message === null)
+    if (message === null) {
       return;
-
+    }
     const pos = this.messages.indexOf(message);
-    if (pos < 0)
+    if (pos < 0) {
       return;
+    }
 
     this.messages = [...this.messages];
-    this.messageChangeEvent.emit(this.messages.slice());
+    this.messageChangeEvent.next(this.messages.slice());
   }
 
 

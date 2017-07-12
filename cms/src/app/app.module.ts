@@ -18,38 +18,43 @@ import { DocumentItemComponent } from './documents/document-item/document-item.c
 import { MessageListComponent } from './messages/message-list/message-list.component';
 import { MessageItemComponent } from './messages/message-item/message-item.component';
 import { MessageEditComponent } from './messages/message-edit/message-edit.component';
-import {ContactService} from "./contacts/contact.service";
-import {MessageService} from "./messages/message.service";
-import {DocumentService} from "./documents/document.service";
-import {AppRoutingModule} from "./app-routing.module";
+import {ContactService} from './contacts/contact.service';
+import {MessageService} from './messages/message.service';
+import {DocumentService} from './documents/document.service';
+import {AppRoutingModule} from './app-routing.module';
 import { DocumentEditComponent } from './documents/document-edit/document-edit.component';
-import { WindRefService } from "./wind-ref.service";
+import { WindRefService } from './wind-ref.service';
 import { ContactEditComponent } from './contacts/contact-edit/contact-edit.component';
+import { DndModule } from 'ng2-dnd';
 
 @NgModule({
   declarations: [
     AppComponent,
+    ContactsComponent,
     ContactListComponent,
     ContactDetailComponent,
     ContactItemComponent,
+
     HeaderComponent,
-    ContactsComponent,
     DropdownDirective,
     DocumentsComponent,
     DocumentListComponent,
     DocumentDetailComponent,
     DocumentItemComponent,
+    DocumentEditComponent,
     MessageListComponent,
     MessageItemComponent,
     MessageEditComponent,
-    DocumentEditComponent,
     ContactEditComponent,
+
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    AppRoutingModule
+    AppRoutingModule,
+    DndModule.forRoot()
+
   ],
   providers: [ContactService, MessageService, DocumentService, WindRefService ],
   bootstrap: [AppComponent]
