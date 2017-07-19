@@ -3,11 +3,11 @@
     <h3>{{contact?.name}}</h3>
     <div class="row pad-all">
       <div class="clear-fix pull-left">
-        <img src="{{contact?.imageUrl}}" style="max-height: 80px;" alt="" class="img-responsive">
+        <img class="img-responsive" src="{{contact?.imageUrl}}" style="max-height: 80px;"/>
       </div>
       <div class="pull-right" style="margin-top: 2rem; ">
-        <button class="btn btn-primary" [routerLink]="['../edit']">Edit</button>
-        <button class="btn btn-danger" (click)="onDelete()">Delete</button>
+        <a class="btn btn-primary" [routerLink]="['edit']">Edit</a>
+        <a class="btn btn-danger" (click)="onDelete()">Delete</a>
       </div>
     </div>
   </div>
@@ -25,12 +25,18 @@
       </div>
     </div>
 
-    <div class="row" *ngIf="hasGroup">
-      <label for="groupContacts" style="margin-left: 1rem;">Group contacts:</label>
-      <div class="col-xs-12" id="groupContacts">
-        <cms-contact-group-item *ngFor="let contact of contactGroup" [contact]="contact"></cms-contact-group-item>
+    <div class="row" *ngIf="contactGroup && contactGroup.length > 0">
+      <label for="groupContacts" style="margin-left: 1rem;">Contacts in Team:</label>
+      <div id="groupContacts" class="col-xs-12">
+        <div *ngFor="let contact of contactGroup">
+          <div>
+            <cms-contact-item class="col-sm-11" [contact]="contact"></cms-contact-item>
+          </div>
+        </div>
       </div>
     </div>
 
   </div>
 </div>
+
+

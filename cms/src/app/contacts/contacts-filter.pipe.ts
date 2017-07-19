@@ -1,6 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {forEach} from "@angular/router/src/utils/collection";
-import {Contact} from "./contact";
+import {Contact} from "./contact.model";
 
 @Pipe({
   name: 'contactsFilter'

@@ -1,11 +1,12 @@
 
-<a class="list-group-item clearfix" [routerLink]="contact.id + '/detail'" routerLinkActive="active">
+<a class="list-group-item clearfix" [routerLink]="contact.id" routerLinkActive="active">
   <div class="pull-left">
     <span class="list-group-item-heading" style="font-size: 2rem">{{contact?.name}}</span>
   </div>
-  <span class="pull-right">
+  <span class="pull-right" >
       <img class="img-responsive"
            src="{{contact?.imageUrl}}"
            style="max-height: 50px;"/>
   </span>
 </a>
+

@@ -1,52 +1,40 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import {Contact} from "../contact";
-import {ActivatedRoute, Router} from "@angular/router";
-import {Subscription} from "rxjs";
-import {ContactsService} from "../contacts.service";
+import {Component, OnInit} from '@angular/core';
+import {Contact} from "../contact.model";
+import {ContactService} from "../contact.service";
+import {ActivatedRoute, Params, Router} from "@angular/router";
 
 @Component({
   selector: 'cms-contact-detail',
   templateUrl: './contact-detail.component.html',
   styleUrls: ['./contact-detail.component.css']
 })
-export class ContactDetailComponent implements OnInit, OnDestroy {
+export class ContactDetailComponent implements OnInit {
 
   contact: Contact;
-  contactIdx: number
+  contactGroup: Contact[] = []
 
-  subscription: Subscription;
-  contactGroup: Contact[] = [];
-  hasGroup: boolean = false;
-
-  constructor(private contactService: ContactsService,
+  constructor(private contactService: ContactService,
               private router: Router,
-              private activatedRoute: ActivatedRoute, ) {
+              private route: ActivatedRoute) {
+    this.contact = new Contact("", "", "", "", "", []);
   }
 
   ngOnInit() {
-    this.subscription = this.activatedRoute.params.subscribe(
-      (param: any) => {
-        this.contact = this.contactService.getContactById(param['id']);
-
-        if (this.contact.group && this.contact.group.length > 0) {
-          this.contactGroup =  this.contact.group;
-          this.hasGroup = true;
-        }
-        else {
-          this.hasGroup = false;
-        }
+    this.route.params.subscribe(
+      (params: Params) => {
+        this.contact = this.contactService.getContact(params['id']);
+        this.contactGroup = this.contact.group;
       }
     );
   }
 
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
+  onEdit() {
+    this.router.url
   }
 
   onDelete() {
     this.contactService.deleteContact(this.contact);
-    this.router.navigate(['contacts']);
+    this.router.navigate(['/contacts']);
   }
 
 }

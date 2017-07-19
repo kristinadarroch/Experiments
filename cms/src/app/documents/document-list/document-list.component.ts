@@ -1,7 +1,7 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
-import {DocumentsService} from "../documents.service";
-import {Document} from "../document";
-import {Subscription} from "rxjs";
+import {Component, EventEmitter, OnInit, OnDestroy} from '@angular/core';
+import {Document} from '../document.model';
+import {DocumentService} from '../document.service';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'cms-document-list',
@@ -10,21 +10,26 @@ import {Subscription} from "rxjs";
 })
 export class DocumentListComponent implements OnInit, OnDestroy {
 
-  documents: Document[] =[];
-  subscription: Subscription;
+  documents: Document[] = [];
+  documentId: string = '';
+  private documentChangeEvent: Subscription;
 
-  constructor(private documentsService: DocumentsService) {
-    this.subscription = this.documentsService.getDocumentsEmitter.subscribe(
-      ( documents: Document[]) => this.documents = documents
+  constructor(private documentService: DocumentService) {
+    this.documents = this.documentService.getDocuments();
+    this.documentService.documentChangeEvent;
+  }
+
+  ngOnInit() {
+    this.documentChangeEvent = this.documentService.documentChangeEvent.subscribe(
+      (documents: Document[]) => {
+        this.documents = documents;
+      }
     );
   }
 
- ngOnInit() {
-      this.documents = this.documentsService.getDocuments();
-  }
-
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.documentChangeEvent.unsubscribe();
   }
 
 }
+

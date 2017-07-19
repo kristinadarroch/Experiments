@@ -1,9 +1,7 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
-import {Message} from "../message";
-import {MessagesService} from "../messages.service";
-import {Subscription} from "rxjs";
-
-
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Message } from '../message.model';
+import { MessageService } from '../message.service';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'cms-message-list',
@@ -13,18 +11,24 @@ import {Subscription} from "rxjs";
 export class MessageListComponent implements OnInit, OnDestroy {
 
   messages: Message[] = [];
-  subscription: Subscription;
+  private messageChangeEvent: Subscription;
 
-  constructor(private messagesService: MessagesService) { }
+  constructor(private messageService: MessageService) {
+    this.messages = this.messageService.getMessages();
+  }
 
   ngOnInit() {
-    this.messages = this.messagesService.getMessages();
-    this.subscription = this.messagesService.getMessagesEmitter.subscribe(
-      ( messages: Message[]) => this.messages = messages
-    );
+    this.messageChangeEvent = this.messageService.messageChangeEvent
+      .subscribe(
+        (messages: Message[]) => {
+          this.messages = messages;
+        }
+      );
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.messageChangeEvent.unsubscribe();
   }
+
+
 }
